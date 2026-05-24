@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+}
+
+.severity-critical {
+  @apply bg-red-500/15 text-red-300 border-red-500/40;
+}
+.severity-high {
+  @apply bg-orange-500/15 text-orange-300 border-orange-500/40;
+}
+.severity-medium {
+  @apply bg-yellow-500/15 text-yellow-200 border-yellow-500/40;
+}
+.severity-low {
+  @apply bg-sky-500/15 text-sky-300 border-sky-500/40;
+}
+.severity-unknown {
+  @apply bg-slate-500/15 text-slate-300 border-slate-500/40;
+}
