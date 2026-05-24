@@ -1,0 +1,39 @@
+services:
+  backend:
+    build: ./backend
+    environment:
+      DATABASE_URL: ${DATABASE_URL:-postgresql+psycopg://appuser:change_me@10.0.20.2:5432/appdb}
+      PACKRAKK_STORAGE_DIR: /data/storage
+      PACKRAKK_SCANNER_TIMEOUT_SECONDS: "600"
+      BACKEND_CORS_ORIGINS: http://localhost:5173
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./storage:/data/storage
+      # Mount the host docker socket so the in-container scanners can analyze
+      # images that are already pulled on the host. Comment out if undesired.
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  frontend:
+    build: ./frontend
+    environment:
+      VITE_API_BASE_URL: http://localhost:8000/api
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
+  # Uncomment to run a local Postgres instead of using the external one.
+  # postgres:
+  #   image: postgres:16
+  #   environment:
+  #     POSTGRES_USER: appuser
+  #     POSTGRES_PASSWORD: change_me
+  #     POSTGRES_DB: appdb
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - pgdata:/var/lib/postgresql/data
+
+# volumes:
+#   pgdata:
